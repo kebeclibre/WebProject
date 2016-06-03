@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Jun 1, 2016, 2:25:25 PM
+    Document   : Login
+    Created on : Jun 3, 2016, 2:23:08 PM
     Author     : Rome10
 --%>
 
@@ -9,10 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Proprement Préparé</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <a href="allBooks">AllBooks</a>
+        <form action="login" method="POST">
+            <input name="user" type="text"/>
+            <input name="password" type="password" />
+            <input type="submit" value="send" />
+        </form>
     </body>
 </html>

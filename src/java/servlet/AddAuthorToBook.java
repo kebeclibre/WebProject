@@ -5,14 +5,8 @@
  */
 package servlet;
 
-import be.bt.model.Author;
-import be.bt.model.Book;
-import be.bt.model.Library;
-import be.bt.model.dao.LibraryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author rome10
+ * @author Rome10
  */
-public class allBooksServ extends HttpServlet {
+public class AddAuthorToBook extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,11 +29,6 @@ public class allBooksServ extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                    
-            Library lib = new Library();
-            List<Book> allBooks = lib.getAllBooks();
-        
-        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
@@ -47,34 +36,10 @@ public class allBooksServ extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet allBooksServ</title>");            
+            out.println("<title>Servlet AddAuthorToBook</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>All Books Bitch !</h1>");
-            out.println("<table>");
-            out.println("<tr>");
-            out.println("<td>Author</td>");
-            out.println("<td>Title</td>");
-            out.println("<td>ISBN</td>");
-            out.println("<td>Price</td>");
-            out.println("<td>Details</td>");
-            out.println("</tr>");
-            for (Book b : allBooks) {
-                out.println("<tr>");
-                out.println("<td>");
-                Set<Author> auths = b.getAuthors();
-                for (Author auth : auths) {
-                    out.println(auth.getLastname()+", "+auth.getFirstname()+"; ");
-                }
-                out.println("</td>");
-                out.println("<td>"+b.getTitle()+"</td>");
-                out.println("<td>"+b.getIsbn()+"</td>");
-                out.println("<td>"+b.getPrice()+"</td>");
-                String isbn = b.getIsbn();
-                out.println("<td><a href=\"viewAuthors?isbn="+isbn+"\">View Auth</a></td>");
-                out.println("</tr>");
-            }
-             out.println("</table>");
+            out.println("<h1>Servlet AddAuthorToBook at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {
