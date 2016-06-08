@@ -14,10 +14,10 @@
     <body>
         <h1>Hello World!</h1>
         <form action="AddBook">
-            <input name="title" type="tewt" />
-            
-            
-            
+            <input name="title" type="text" />
+            <input name="isbn" type="text" />
+            <input name="price" type="text" />
+            <input name="submit" type="submit"/> 
             
         </form>
     </body>

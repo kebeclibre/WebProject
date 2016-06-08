@@ -5,6 +5,8 @@
  */
 package servlet;
 
+import be.bt.model.Book;
+import be.bt.model.dao.LibraryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Rome10
+ * @author rome10
  */
 public class AddBook extends HttpServlet {
 
@@ -29,27 +31,17 @@ public class AddBook extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddBook</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddBook at " + request.getContextPath() + "</h1>");
-            out.println("<>");
-            
-            
-            
-            
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
-        }
+       
+        String title = request.getParameter("title");
+        int price = Integer.parseInt(request.getParameter("price"));
+        String isbn = request.getParameter("isbn");
+        
+        Book newBook = new Book();
+        newBook.setIsbn(isbn);
+        newBook.setPrice(price);
+        newBook.setTitle(title);
+        LibraryDAO.getInstance().addBook(newBook);
+        request.getRequestDispatcher("viewAuthor?isbn=isbn");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

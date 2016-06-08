@@ -4,7 +4,17 @@
     Author     : Rome10
 --%>
 
+<%@page import="login.UserAuth"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<%
+   UserAuth auth = (UserAuth)session.getAttribute("UserAuth");
+   %>
+   <%= auth%>
+   <%
+
+%>
 <!DOCTYPE html>
 <html>
     <head>

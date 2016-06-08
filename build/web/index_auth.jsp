@@ -9,7 +9,8 @@
     <body>
         <h1>Hello World!</h1>
         <a href="allBooks">AllBooks</a><br/>
-        <a href="AddBook">AddBook</a>
+        <a href="bookForm.jsp">AddBook</a>
+        <a href="authorForm.jsp">AddAuthor</a>
     </body>
 </html>
 

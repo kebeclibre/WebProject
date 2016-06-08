@@ -6,6 +6,8 @@ package servlet;
  * and open the template in the editor.
  */
 
+import be.bt.model.Author;
+import be.bt.model.dao.LibraryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -45,8 +47,15 @@ public class AddAuthor extends HttpServlet {
         } catch (ParseException ex) {
             Logger.getLogger(AddAuthor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.
+        Author author = new Author();
+        author.setFirstname(firstname);
+        author.setLastname(lastname);
+        author.setBirthdate(birthDate);
+        LibraryDAO.getInstance().addAuthor(author);
+        
     }
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

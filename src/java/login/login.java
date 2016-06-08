@@ -1,3 +1,5 @@
+package login;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,18 +30,29 @@ public class login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      String username = request.getParameter("user");
-      String pass = request.getParameter("password");
-      int authResult = Authenticator.verifyCredentials(username, pass);
-      
-      switch(authResult) {
-          case -1: request.getRequestDispatcher("index.jsp").forward(request, response); break;
-          case 0:
-                request.getSession(true).setAttribute("authResult", authResult);
-                request.getRequestDispatcher("index_auth.jsp").forward(request, response); break;
-          case 1: break;
-          case 2: break;
-      }
+        UserAuth ua = (UserAuth) request.getSession().getAttribute("UserAuth");
+       
+        if (null==ua) {
+              ua = new UserAuth();
+        }
+        
+        if (ua.getAuthStatus() ==  0 && ua.getLogCount() < 3) {           
+            this.getServletContext().getRequestDispatcher("/index_auth.jsp").forward(request, response);
+        } else {
+            String username = request.getParameter("user");
+            String pass = request.getParameter("password");
+       
+
+                
+            request.getSession().setAttribute("UserAuth", ua);
+            ua.setUsername(username);
+            ua.setAuthStatus(Authenticator.verifyCredentials(ua.getUsername(), pass));
+            ua.setLogCount(ua.getLogCount()+1);
+        
+        
+        
+            this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,5 +93,6 @@ public class login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
+
+   
