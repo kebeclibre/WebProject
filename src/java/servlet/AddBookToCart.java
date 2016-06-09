@@ -1,24 +1,26 @@
-package login;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package servlet;
 
-import beans.UserAuth;
+import be.bt.model.Book;
+import be.bt.model.dao.LibraryDAO;
+import beans.BookBean;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import servlet.Authenticator;
+import login.ShopCart;
 
 /**
  *
- * @author Rome10
+ * @author rome10
  */
-public class login extends HttpServlet {
+public class AddBookToCart extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,35 +34,28 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        UserAuth ua = (UserAuth) request.getSession().getAttribute("UserAuth");
-       
-        if (null==ua) {
-              ua = new UserAuth();
+        ShopCart sc = (ShopCart) request.getSession().getAttribute("ShopCart");
+        
+        if (null == sc) {
+            sc = new ShopCart();
+            request.getSession().setAttribute("ShopCart", sc);
         }
         
-        if (ua.getAuthStatus() ==  0 && ua.getLogCount() < 3) {           
-            this.getServletContext().getRequestDispatcher("/iFaceAuthOk.jsp").forward(request, response);
-        } else {
-            String username = request.getParameter("user");
-            String pass = request.getParameter("password");
-
-                
-            request.getSession().setAttribute("UserAuth", ua);
-            
-            ua.setUsername(username);
-            ua.setAuthStatus(Authenticator.verifyCredentials(ua.getUsername(), pass));
-            ua.setLogCount(ua.getLogCount()+1);
-            
-            if (ua.getAuthStatus() == 0) {
-                this.getServletContext().getRequestDispatcher("/iFaceAuthOk.jsp").forward(request, response);
-            } else {
-                this.getServletContext().getRequestDispatcher("/formLogin.jsp").forward(request, response);
-            }
         
+        String[] recup = request.getParameterValues("bookToAdd");
         
-        
-            
+        if (null != recup) {
+            for (String isbn : recup) {
+                Book b =  LibraryDAO.getInstance().getBookByIsbn(isbn);
+                BookBean bb = new BookBean();
+                bb.setIsbn(isbn);
+                bb.setTitle(b.getTitle());
+                bb.setPrice(b.getPrice());
+                sc.addBook(bb);
+            }     
         }
+        
+        request.getRequestDispatcher("DisplayCart.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -101,6 +96,5 @@ public class login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-}
 
-   
+}

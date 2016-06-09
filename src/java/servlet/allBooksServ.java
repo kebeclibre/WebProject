@@ -51,6 +51,7 @@ public class allBooksServ extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>All Books Bitch !</h1>");
+            out.println("<form action=\"AddBookToCart\" method=\"POST\" />");
             out.println("<table>");
             out.println("<tr>");
             out.println("<td>Author</td>");
@@ -59,6 +60,7 @@ public class allBooksServ extends HttpServlet {
             out.println("<td>Price</td>");
             out.println("<td>Details</td>");
             out.println("</tr>");
+            
             for (Book b : allBooks) {
                 out.println("<tr>");
                 out.println("<td>");
@@ -72,9 +74,12 @@ public class allBooksServ extends HttpServlet {
                 out.println("<td>"+b.getPrice()+"</td>");
                 String isbn = b.getIsbn();
                 out.println("<td><a href=\"viewAuthors?isbn="+isbn+"\">View Auth</a></td>");
+                out.println("<td><input type=\"checkbox\" name=\"bookToAdd\" value=\""+isbn+"\" /></td>");
                 out.println("</tr>");
             }
              out.println("</table>");
+           out.println("<input type=\"submit\" value=\"Submit\"/>");
+             out.println("</form>");
             out.println("</body>");
             out.println("</html>");
         } finally {
