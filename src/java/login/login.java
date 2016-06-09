@@ -34,8 +34,8 @@ public class login extends HttpServlet {
         
         UserAuth ua = (UserAuth) request.getSession().getAttribute("UserAuth");
        
-        if (null==ua) {
-              ua = new UserAuth();
+        if (null==ua || ua.getAuthStatus() !=  0) {
+              new LoggerAction().exe
         }
         
         if (ua.getAuthStatus() ==  0 && ua.getLogCount() < 3) {           
